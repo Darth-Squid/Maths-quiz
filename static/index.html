@@ -39,8 +39,32 @@
     </div>
 
     <div id="dashboard" class="hidden">
-        <div id="sidebar-header">
-            <div class="profile-wrapper" onClick="open_profile_picture_changer()"></div><span id="user-username"></span><div class="profile-settings-button"></div>
+        <div id="sidebar">
+            <div id="sidebar-header">
+                <div class="profile-wrapper" onclick="open_profile_picture_changer()"></div>
+                <span id="user-username"></span>
+                <div class="profile-settings-button"></div>
+            </div>
+
+            <div id="sidebar-content">
+                ...
+            </div>
+        </div>
+
+        <div id="quiz-selector-container">
+            <div id="multiplication-quiz-selection-box" class="quiz-selection-box">
+                <h1>The multiplication quiz!</h1> <input type="checkbox" id="multiplication-quiz-checkbox" class="quiz-checkbox">
+                <p1>This quiz is about all things multiplication!</p1>
+            </div>
+            <div id="division-quiz-selection-box" class="quiz-selection-box">
+                <span>The division quiz!</span> <input type="checkbox" id="division-quiz-checkbox" class="quiz-checkbox">
+            </div>
+            <div id="addition-quiz-selection-box" class="quiz-selection-box">
+                <span>The addition quiz!</span> <input type="checkbox" id="addition-quiz-checkbox" class="quiz-checkbox">
+            </div>
+            <div id="subtraction-quiz-selection-box" class="quiz-selection-box">
+                <span>The subtraction quiz!</span> <input type="checkbox" id="subtraction-quiz-checkbox" class="quiz-checkbox">
+            </div>
         </div>
     </div>
 
