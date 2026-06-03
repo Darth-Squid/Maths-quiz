@@ -68,6 +68,7 @@ async function create_account(){
         console.warn(res["error"])
         document.getElementById("create-account-error").classList.remove("hidden")
         document.getElementById("create-account-menu-text").classList.add("hidden")
+        console.log("WOW")
     }
 
     if (res["success"] === "true"){
@@ -82,7 +83,7 @@ function open_create_account(){
     open_create_account_menu.classList.remove("hidden")
 
     document.getElementById("login-buttons").classList.add("hidden")
-    document.getElementById("login-buttons").classList.add("hidden")
+    document.getElementById("welcome-text").classList.add("hidden")
 }
 
 function create_account_success(){

@@ -1,8 +1,12 @@
 import http.server
+import random
+import string
 import webbrowser
+from shlex import join
+
 from config import PORT
 import json
-#Default address is: localhost:8000
+#Default address is: localhost:7000
 
 process = None
 console_buffer = []
@@ -31,14 +35,21 @@ class IDEHandler(http.server.SimpleHTTPRequestHandler):
             print("Login attempt stage 1")
             u = data["username"]
             p = data["password"]
-            return self.login(u, p)
+
+            password = self.hash_string(p)
+
+            return self.login(u, password)
 
         if self.path == "/create_account":
             u = data["username"]
             p = data["password"]
-            return  self.create_account(u, p)
 
-    def create_account(self, username, password):
+            password = self.hash_string(p)
+
+            return self.create_account(u, password, self.generate_16_chars())
+
+
+    def create_account(self, username, password, salt):
         with open("users.json", "r+", encoding="utf-8") as file:
             users = json.load(file)
 
@@ -46,9 +57,10 @@ class IDEHandler(http.server.SimpleHTTPRequestHandler):
                 return self._send({"error": "already_exists"}, 400)
 
             users[username] = {
-                "password": password,
+                "password": password + salt,
                 "icon": "images/default.png",
-                "nickname": username
+                "nickname": username,
+                "salt": salt,
             }
 
             file.seek(0)
@@ -64,10 +76,27 @@ class IDEHandler(http.server.SimpleHTTPRequestHandler):
             if username not in users:
                 self._send({"error": "Username not found"}, 400)
                 return
-            if users[username]["password"] == password:
+            if users[username]["password"] == password + users[username]["salt"]:
                 self._send({"success": "true"})
             else:
                 self._send({"success": "false"})
+
+    def hash_string(self, text):
+        result = 0x811c9dc5
+
+        for char in text:
+            result ^= ord(char)
+            result *= 0x01000193
+            result &= 0xFFFFFFFF
+
+        return str(hex(result)[2:])
+
+    def generate_16_chars(self):
+        letters = string.ascii_letters + string.digits + string.punctuation + string.whitespace
+
+        value = [random.choice(letters) for i in range(16)]
+
+        return join(value)
 
     def end_headers(self):
         self.send_header("Cache-Control", "no-store, no-cache, must-revalidate")
@@ -77,5 +106,9 @@ class IDEHandler(http.server.SimpleHTTPRequestHandler):
 
 
 if __name__ == "__main__":
-    webbrowser.open('http://localhost:7000')
-    http.server.HTTPServer(("localhost", PORT), IDEHandler).serve_forever()
+    webbrowser.open(f'http://localhost:{PORT}')
+
+    http.server.ThreadingHTTPServer(
+        ("localhost", PORT),
+        IDEHandler
+    ).serve_forever()

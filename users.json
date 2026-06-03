@@ -1,12 +1,14 @@
 {
-    "example_username": {
-        "password": "example_password",
+    "Ben": {
+        "password": "7cd280abH n , '?' '{' '>' m 1 H z ';' ']' b 8 E '!'",
         "icon": "images/default.png",
-        "nickname": "Example user"
+        "nickname": "Ben",
+        "salt": "H n , '?' '{' '>' m 1 H z ';' ']' b 8 E '!'"
     },
-    "Ben Burton": {
-        "password": "12345",
+    "example_username": {
+        "password": "b4a32cb7')' M f B I w S '~' '`' d j q : '\r' i X",
         "icon": "images/default.png",
-        "nickname": "Ben Burton"
+        "nickname": "example_username",
+        "salt": "')' M f B I w S '~' '`' d j q : '\r' i X"
     }
 }
