@@ -39,7 +39,24 @@
     </div>
 
     <div id="dashboard" class="hidden">
-        Dashboard
+        <div id="sidebar-header">
+            <div class="profile-wrapper" onClick="open_profile_picture_changer()"></div><span id="user-username"></span><div class="profile-settings-button"></div>
+        </div>
+    </div>
+
+    <div id="upload-profile-picture" class="hidden">
+        <div id="upload-profile-picture-box">
+
+            <div id="open-profile-picture-header">
+                Upload profile picture
+                <button id="close-change-profile-picture" onclick="close_profile_picture_changer()">Close</button>
+            </div>
+
+            <div id="open-profile-picture-content">
+                Drop image here
+            </div>
+
+        </div>
     </div>
 
     <script src="app.js"></script>

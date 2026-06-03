@@ -1,4 +1,5 @@
 import http.server
+import os
 import random
 import string
 import webbrowser
@@ -22,13 +23,19 @@ class IDEHandler(http.server.SimpleHTTPRequestHandler):
         self.wfile.write(json.dumps(data).encode())
 
     def do_POST(self):
+        print("POST PATH:", self.path)
+
+        if self.path == "/upload":
+            length = int(self.headers.get("Content-Length", 0))
+            data = self.rfile.read(length)
+            return self.upload_file(data)
 
         try:
             length = int(self.headers.get("Content-Length", 0))
             data = json.loads(self.rfile.read(length))
-        except:
-            self.send_response(400)
-            self.end_headers()
+        except Exception as e:
+            print("JSON ERROR:", e)
+            self._send({"error": "invalid json"}, 400)
             return
 
         if self.path == "/login":
@@ -37,17 +44,77 @@ class IDEHandler(http.server.SimpleHTTPRequestHandler):
             p = data["password"]
 
             password = self.hash_string(p)
-
             return self.login(u, password)
 
-        if self.path == "/create_account":
+        elif self.path == "/create_account":
             u = data["username"]
             p = data["password"]
-
             password = self.hash_string(p)
 
             return self.create_account(u, password, self.generate_16_chars())
 
+        elif self.path == "/get_nickname":
+            return self.get_nickname(data["username"])
+
+        elif self.path == "/get_icon":
+            return self.get_icon(data)
+
+        elif self.path == "/set_icon":
+
+            username = data["username"]
+
+            icon = data["icon"]
+
+            return self.set_icon(username, icon)
+
+        else:
+            return self._send({"error": "invalid api call"}, 400)
+
+    def set_icon(self, username, icon):
+        with open("users.json", "r+", encoding="utf-8") as file:
+            users = json.load(file)
+
+            if username not in users:
+                return self._send({"error": "user not found"}, 404)
+
+            users[username]["icon"] = icon
+
+            file.seek(0)
+            json.dump(users, file, indent=4)
+            file.truncate()
+
+        return self._send({"success": "true"})
+
+    def get_icon(self, data):
+        try:
+            username = data.get("username")
+            if not username:
+                return self._send({"error": "missing username"}, 400)
+
+            with open("users.json", "r", encoding="utf-8") as file:
+                users = json.load(file)
+
+            if username not in users:
+                return self._send({"error": "user not found"}, 404)
+
+            return self._send({
+                "icon": users[username]["icon"]
+            })
+
+        except Exception as e:
+            print("get_icon error:", e)
+            return self._send({"error": "server error"}, 500)
+
+    def get_nickname(self, currentUser):
+        with open("users.json", "r") as file:
+            users = json.load(file)
+
+        if currentUser not in users:
+            return self._send({"error": "not found"}, 404)
+
+        return self._send({
+            "nickname": users[currentUser]["nickname"]
+        })
 
     def create_account(self, username, password, salt):
         with open("users.json", "r+", encoding="utf-8") as file:
@@ -80,6 +147,23 @@ class IDEHandler(http.server.SimpleHTTPRequestHandler):
                 self._send({"success": "true"})
             else:
                 self._send({"success": "false"})
+
+    def upload_file(self, data):
+        filename = self.headers.get("X-Filename")
+
+        if not filename:
+            return self._send({"error": "missing filename"}, 400)
+
+        save_path = os.path.join("static", filename)
+        os.makedirs(os.path.dirname(save_path), exist_ok=True)
+
+        with open(save_path, "wb") as f:
+            f.write(data)
+
+        return self._send({
+            "status": "uploaded",
+            "path": filename
+        })
 
     def hash_string(self, text):
         result = 0x811c9dc5
