@@ -279,3 +279,23 @@ html,body{
     width: 20px;
     height: 20px;
 }
+
+#sidebar-footer {
+    margin-top: auto;
+}
+
+#start-quiz-button{
+    background: dodgerblue;
+    padding: 16px;
+    border-radius: 6px;
+    width: 250px;
+    corner:round;
+    border: none;
+    font-size: 15px;
+    position: relative;
+    left: 6px
+}
+
+#start-quiz-button:hover{
+    background: lightskyblue;
+}

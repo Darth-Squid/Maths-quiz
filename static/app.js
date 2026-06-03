@@ -206,3 +206,25 @@ dropZone.addEventListener("drop", async (e) => {
 function close_profile_picture_changer(){
     document.getElementById("upload-profile-picture").classList.add("hidden")
 }
+
+function start_quiz(){
+    let active_quizzes = []
+
+    if (document.getElementById("multiplication-quiz-checkbox").value){
+        active_quizzes["multiplication"] = true
+    }
+
+    if (document.getElementById("division-quiz-checkbox").value){
+        active_quizzes["division"] = true
+    }
+
+    if (document.getElementById("addition-quiz-checkbox").value){
+        active_quizzes["addition"] = true
+    }
+
+    if (document.getElementById("subtraction-quiz-checkbox").value){
+        active_quizzes["subtraction"] = true
+    }
+
+    console.log(active_quizzes)
+}
