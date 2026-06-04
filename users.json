@@ -9,6 +9,8 @@
         "password": "b4a32cb7')' M f B I w S '~' '`' d j q : '\r' i X",
         "icon": "images/default.png",
         "nickname": "example_username",
-        "salt": "')' M f B I w S '~' '`' d j q : '\r' i X"
+        "salt": "')' M f B I w S '~' '`' d j q : '\r' i X",
+        "highscore": 0,
+        "max_streak": 0
     }
 }

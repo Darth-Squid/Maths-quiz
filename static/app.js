@@ -108,6 +108,10 @@ document.addEventListener('keydown', function(event) {
 
         console.log("Enter key entered")
     }
+
+    if (event.key === 'Escape'){
+        next_slide()
+    }
 })
 
 async function open_dashboard() {
@@ -207,24 +211,63 @@ function close_profile_picture_changer(){
     document.getElementById("upload-profile-picture").classList.add("hidden")
 }
 
-function start_quiz(){
-    let active_quizzes = []
+let totalQuizzes = {}
+let currentQuizId = 0
 
-    if (document.getElementById("multiplication-quiz-checkbox").value){
+async function start_quiz(){
+    let active_quizzes = {"multiplication": false, "division": false, "addition": false, "subtraction": false}
+
+    if (document.getElementById("multiplication-quiz-checkbox").checked === true){
         active_quizzes["multiplication"] = true
     }
 
-    if (document.getElementById("division-quiz-checkbox").value){
+    if (document.getElementById("division-quiz-checkbox").checked === true){
         active_quizzes["division"] = true
     }
 
-    if (document.getElementById("addition-quiz-checkbox").value){
+    if (document.getElementById("addition-quiz-checkbox").checked === true){
         active_quizzes["addition"] = true
     }
 
-    if (document.getElementById("subtraction-quiz-checkbox").value){
+    if (document.getElementById("subtraction-quiz-checkbox").checked === true){
         active_quizzes["subtraction"] = true
     }
 
+    if (active_quizzes["subtraction"] === false && active_quizzes["multiplication"] === false && active_quizzes["division"] === false && active_quizzes["addition"] === false){
+        return
+    }
+
+    document.getElementById("dashboard").classList.add("hidden")
+    document.getElementById("quiz-menu").classList.remove("hidden")
+
+    let quizMenu = document.getElementById("quiz-menu")
+    quizMenu.innerHTML = '<iframe src="quiz_pages/1.html" class="quiz-frame" id="quiz-frame"> </iframe>';
+
+    totalQuizzes = await api("/generate_quiz", active_quizzes)
+
+    totalQuizzes["files"].sort((a, b) => {
+        const numA = Number(a.split(".")[0]);
+        const numB = Number(b.split(".")[0]);
+        return numA - numB;
+    });
+    console.log(totalQuizzes["files"])
+
     console.log(active_quizzes)
+    console.log(totalQuizzes)
+}
+
+function next_slide(){
+    currentQuizId += 1
+
+    if (currentQuizId > totalQuizzes["files"].length){
+        document.getElementById("dashboard").classList.remove("hidden")
+        document.getElementById("quiz-menu").classList.add("hidden")
+    }
+
+    document.getElementById("quiz-frame").src = "quiz_pages/" + totalQuizzes["files"][currentQuizId]
+    console.log(totalQuizzes["files"][currentQuizId])
+}
+
+function check_answer(){
+    next_slide()
 }

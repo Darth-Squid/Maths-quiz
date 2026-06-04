@@ -247,12 +247,12 @@ html,body{
 .quiz-selection-box {
     position: relative;
 
-    width: 500px;
+    width: 450px;
     height: 300px;
 
     background: #2d2d40;
     border: 5px solid #3c97bf;
-    border-radius: 30px;
+    border-radius: 10px;
 }
 
 #dashboard {
@@ -287,7 +287,7 @@ html,body{
 #start-quiz-button{
     background: dodgerblue;
     padding: 16px;
-    border-radius: 6px;
+    border-radius: 3px;
     width: 250px;
     corner:round;
     border: none;
@@ -298,4 +298,14 @@ html,body{
 
 #start-quiz-button:hover{
     background: lightskyblue;
+}
+
+.quiz-frame {
+    width: 100%;
+    height: 99vh;
+    border: none;
+}
+
+#quiz-menu-container {
+    flex: 1;
 }

@@ -4,6 +4,7 @@ import random
 import string
 import webbrowser
 from shlex import join
+from os.path import isfile, join
 
 from config import PORT
 import json
@@ -67,8 +68,37 @@ class IDEHandler(http.server.SimpleHTTPRequestHandler):
 
             return self.set_icon(username, icon)
 
+        elif self.path == "/generate_quiz":
+            return self.generate_quiz(data)
+
         else:
             return self._send({"error": "invalid api call"}, 400)
+
+    def generate_quiz(self, data):
+        for i in os.listdir("static/quiz_pages"):
+            if i.endswith(".html"):
+                os.remove("static/quiz_pages/" + i)
+
+        questions = []
+        for i in range(1, 11):
+            if data["multiplication"]:
+                  question = f"{random.randrange(1, 12)} * {random.randrange(1, 12)}"
+                  questions.append(question)
+            if data["division"]:
+                question = f"{random.randrange(1, 12)} / {random.randrange(1, 12)}"
+                questions.append(question)
+            if data["addition"]:
+                question = f"{random.randrange(1, 12)} + {random.randrange(1, 12)}"
+                questions.append(question)
+            if data["subtraction"]:
+                question = f"{random.randrange(1, 12)} - {random.randrange(1, 12)}"
+                questions.append(question)
+
+        for question in questions:
+            with open(f"static/quiz_pages/{questions.index(question) + 1}.html", "w") as file:
+                file.write(f"""<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Title</title><link rel="stylesheet" href="quiz_stylesheet.css"></head><body><div id="quiz-screen"><div id="quiz-container"><div id="quiz-top-bar"><div id="question-counter">Question {questions.index(question) + 1} / {len(questions)}</div><div id="score-display">Score: 2</div></div><div id="quiz-content"><div id="quiz-image-container"><img id="quiz-image" src="images/example.png" alt="Question image"></div><div id="quiz-question">What is {question}?</div><input type="text" id="quiz-answer" placeholder="Type your answer..."><button id="submit-answer-button" onclick="parent.check_answer()">Submit Answer</button></div></div></div></body></html>""")
+
+        return self._send({"files":[i for i in os.listdir("static/quiz_pages") if i.endswith(".html")]})
 
     def set_icon(self, username, icon):
         with open("users.json", "r+", encoding="utf-8") as file:
@@ -128,6 +158,8 @@ class IDEHandler(http.server.SimpleHTTPRequestHandler):
                 "icon": "images/default.png",
                 "nickname": username,
                 "salt": salt,
+                "highscore": 0,
+                "max_streak": 0
             }
 
             file.seek(0)
