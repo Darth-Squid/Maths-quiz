@@ -52,7 +52,7 @@ class IDEHandler(http.server.SimpleHTTPRequestHandler):
             p = data["password"]
             password = self.hash_string(p)
 
-            return self.create_account(u, password, self.generate_16_chars())
+            return self.create_account(u, password, self.generate_16_chars(), data["form"])
 
         elif self.path == "/get_nickname":
             return self.get_nickname(data["username"])
@@ -96,7 +96,7 @@ class IDEHandler(http.server.SimpleHTTPRequestHandler):
 
         for question in questions:
             with open(f"static/quiz_pages/{questions.index(question) + 1}.html", "w") as file:
-                file.write(f"""<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Title</title><link rel="stylesheet" href="quiz_stylesheet.css"></head><body><div id="quiz-screen"><div id="quiz-container"><div id="quiz-top-bar"><div id="question-counter">Question {questions.index(question) + 1} / {len(questions)}</div><div id="score-display">Score: 2</div></div><div id="quiz-content"><div id="quiz-image-container"><img id="quiz-image" src="images/example.png" alt="Question image"></div><div id="quiz-question">What is {question}?</div><input type="text" id="quiz-answer" placeholder="Type your answer..."><button id="submit-answer-button" onclick="parent.check_answer()">Submit Answer</button></div></div></div></body></html>""")
+                file.write(f"""<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Title</title><link rel="stylesheet" href="quiz_stylesheet.css"></head><body><div id="quiz-screen"><div id="quiz-container"><div id="quiz-top-bar"><div id="question-counter">Question {questions.index(question) + 1} / {len(questions)}</div><div id="score-display">Score: 2</div></div><div id="quiz-content"><div id="quiz-image-container"><img id="quiz-image" src="images/example.png" alt="Question image"></div><div id="quiz-question">What is {question}?</div><input type="text" id="quiz-answer" placeholder="Type your answer..."><button id="submit-answer-button" onclick="parent.check_answer(document.getElementById('quiz-answer').value)">Submit Answer</button></div></div></div></body></html>""")
 
         return self._send({"files":[i for i in os.listdir("static/quiz_pages") if i.endswith(".html")]})
 
@@ -146,7 +146,7 @@ class IDEHandler(http.server.SimpleHTTPRequestHandler):
             "nickname": users[currentUser]["nickname"]
         })
 
-    def create_account(self, username, password, salt):
+    def create_account(self, username, password, salt, form):
         with open("users.json", "r+", encoding="utf-8") as file:
             users = json.load(file)
 
@@ -159,7 +159,8 @@ class IDEHandler(http.server.SimpleHTTPRequestHandler):
                 "nickname": username,
                 "salt": salt,
                 "highscore": 0,
-                "max_streak": 0
+                "max_streak": 0,
+                "form": form
             }
 
             file.seek(0)
@@ -211,8 +212,11 @@ class IDEHandler(http.server.SimpleHTTPRequestHandler):
         letters = string.ascii_letters + string.digits + string.punctuation + string.whitespace
 
         value = [random.choice(letters) for i in range(16)]
+        valueAsString = ""
+        for i in value:
+            valueAsString += i
 
-        return join(value)
+        return valueAsString
 
     def end_headers(self):
         self.send_header("Cache-Control", "no-store, no-cache, must-revalidate")

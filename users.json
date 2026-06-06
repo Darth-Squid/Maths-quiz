@@ -1,16 +1,20 @@
 {
-    "Ben": {
-        "password": "7cd280abH n , '?' '{' '>' m 1 H z ';' ']' b 8 E '!'",
-        "icon": "images/default.png",
-        "nickname": "Ben",
-        "salt": "H n , '?' '{' '>' m 1 H z ';' ']' b 8 E '!'"
-    },
     "example_username": {
-        "password": "b4a32cb7')' M f B I w S '~' '`' d j q : '\r' i X",
+        "password": "b4a32cb73eyxd{xy=X37?o\rC",
         "icon": "images/default.png",
         "nickname": "example_username",
-        "salt": "')' M f B I w S '~' '`' d j q : '\r' i X",
+        "salt": "3eyxd{xy=X37?o\rC",
         "highscore": 0,
-        "max_streak": 0
+        "max_streak": 0,
+        "form": "Hine"
+    },
+    "Ben": {
+        "password": "43c2c0d8s,NOnS`O]:1^#Zz`",
+        "icon": "images/default.png",
+        "nickname": "Ben",
+        "salt": "s,NOnS`O]:1^#Zz`",
+        "highscore": 0,
+        "max_streak": 0,
+        "form": "Hine"
     }
 }

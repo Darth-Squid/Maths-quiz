@@ -1,6 +1,8 @@
 if(!window.console) window.console = {log: function(){}};
 
-let userName = ""
+const USERNAME = ""
+const PASSWORD = ""
+const FORM = ""
 
 async function api(route, data = {}) {
     const res = await fetch(route, {
@@ -58,14 +60,15 @@ function login_success(){
 }
 
 async function create_account(){
-    let userName = document.getElementById("new-username").value
+    userName = document.getElementById("new-username").value
     let password = document.getElementById("new-password").value
+    form = document.getElementById("form-list-create-account").value
 
-    if (userName === "" && password === ""){
+    if (userName === "" || password === "" || form === "" || form === "null"){
         return
     }
 
-    const res = await api("/create_account", {"username":userName, "password":password})
+    const res = await api("/create_account", {"username":userName, "password":password, "form": form})
 
     if (res["error"]){
         console.warn(res["error"])
@@ -107,10 +110,6 @@ document.addEventListener('keydown', function(event) {
         }
 
         console.log("Enter key entered")
-    }
-
-    if (event.key === 'Escape'){
-        next_slide()
     }
 })
 
@@ -259,7 +258,7 @@ async function start_quiz(){
 function next_slide(){
     currentQuizId += 1
 
-    if (currentQuizId > totalQuizzes["files"].length){
+    if (currentQuizId >= totalQuizzes["files"].length){
         document.getElementById("dashboard").classList.remove("hidden")
         document.getElementById("quiz-menu").classList.add("hidden")
     }
@@ -268,6 +267,7 @@ function next_slide(){
     console.log(totalQuizzes["files"][currentQuizId])
 }
 
-function check_answer(){
+function check_answer(answer){
+
     next_slide()
 }
