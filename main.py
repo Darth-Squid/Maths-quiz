@@ -71,8 +71,28 @@ class IDEHandler(http.server.SimpleHTTPRequestHandler):
         elif self.path == "/generate_quiz":
             return self.generate_quiz(data)
 
+        elif self.path == "/get_highscore":
+            return self.get_highscore(data["username"])
+
+        elif self.path == "/set_highscore":
+            return self.set_highscore(data["username"], data["new_score"])
+
         else:
             return self._send({"error": "invalid api call"}, 400)
+
+    def set_highscore(self, username, new_score):
+        with open("users.json", "r+") as file:
+            users = json.load(file)
+            users[username]["highscore"] = new_score
+            file.seek(0)
+            json.dump(users, file, indent=4)
+            file.truncate()
+            return self._send({"success": "true"})
+
+    def get_highscore(self, username):
+        with open("users.json", "r+") as file:
+            users = json.load(file)
+            return self._send({"highscore": users[username]["highscore"]})
 
     def generate_quiz(self, data):
         for i in os.listdir("static/quiz_pages"):
@@ -96,7 +116,7 @@ class IDEHandler(http.server.SimpleHTTPRequestHandler):
 
         for question in questions:
             with open(f"static/quiz_pages/{questions.index(question) + 1}.html", "w") as file:
-                file.write(f"""<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Title</title><link rel="stylesheet" href="quiz_stylesheet.css"></head><body><div id="quiz-screen"><div id="quiz-container"><div id="quiz-top-bar"><div id="question-counter">Question {questions.index(question) + 1} / {len(questions)}</div><div id="score-display">Score: 2</div></div><div id="quiz-content"><div id="quiz-image-container"><img id="quiz-image" src="images/example.png" alt="Question image"></div><div id="quiz-question">What is {question}?</div><input type="text" id="quiz-answer" placeholder="Type your answer..."><button id="submit-answer-button" onclick="parent.check_answer(document.getElementById('quiz-answer').value)">Submit Answer</button></div></div></div></body></html>""")
+                file.write(f"""<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Title</title><link rel="stylesheet" href="quiz_stylesheet.css"></head><body><div id="quiz-screen"><div id="quiz-container"><div id="quiz-top-bar"><div id="question-counter">Question {questions.index(question) + 1} / {len(questions)}</div><div id="score-display">Score: 0</div></div><div id="quiz-content"><div id="quiz-image-container"><img id="quiz-image" src="images/example.png" alt="Question image"></div><div id="quiz-question">What is {question}?</div><input type="text" id="quiz-answer" placeholder="Type your answer..."><button id="submit-answer-button" onclick="parent.check_answer(document.getElementById('quiz-answer').value)">Submit Answer</button></div></div></div></body></html>""")
 
         return self._send({"files":[i for i in os.listdir("static/quiz_pages") if i.endswith(".html")]})
 

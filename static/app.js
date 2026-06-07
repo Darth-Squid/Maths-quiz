@@ -4,6 +4,9 @@ const USERNAME = ""
 const PASSWORD = ""
 const FORM = ""
 
+let highScore = 0
+let score = 0
+
 async function api(route, data = {}) {
     const res = await fetch(route, {
         method: "POST",
@@ -126,6 +129,9 @@ async function open_dashboard() {
 
     const iconRes = await api("/get_icon", { username: userName });
 
+    let highscore = await api("/get_highscore", {username: userName});
+    highScore = highscore["highscore"];
+    document.getElementById("highscore").textContent = "Highscore: " + highScore;
 
     const avatar = document.querySelector(".profile-wrapper");
 
@@ -253,21 +259,31 @@ async function start_quiz(){
 
     console.log(active_quizzes)
     console.log(totalQuizzes)
+
+    score = 0
 }
 
-function next_slide(){
-    currentQuizId += 1
+async function next_slide() {
+    currentQuizId += 1;
 
-    if (currentQuizId >= totalQuizzes["files"].length){
-        document.getElementById("dashboard").classList.remove("hidden")
-        document.getElementById("quiz-menu").classList.add("hidden")
+    if (currentQuizId >= totalQuizzes["files"].length) {
+        console.log("Oooh:" + highScore);
+        await api("/set_highscore", {username: userName, new_score: highScore});
+        open_dashboard();
+        document.getElementById("dashboard").classList.remove("hidden");
+        document.getElementById("quiz-menu").classList.add("hidden");
     }
 
-    document.getElementById("quiz-frame").src = "quiz_pages/" + totalQuizzes["files"][currentQuizId]
-    console.log(totalQuizzes["files"][currentQuizId])
+    document.getElementById("quiz-frame").src = "quiz_pages/" + totalQuizzes["files"][currentQuizId];
+    console.log(totalQuizzes["files"][currentQuizId]);
 }
 
-function check_answer(answer){
+async function check_answer(answer){
 
-    next_slide()
+    score += 1;
+    if (score > highScore){
+        highScore = score;
+    }
+
+    await next_slide();
 }
