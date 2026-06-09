@@ -135,6 +135,20 @@ class IDEHandler(http.server.SimpleHTTPRequestHandler):
                 answers.append(a - b)
                 questions.append(question)
 
+        complete_questions_and_answers = {question: answer for question, answer in zip(questions, answers)}
+
+        keys = list(complete_questions_and_answers.keys())
+        random.shuffle(keys)
+        shuffled_complete_questions_and_answers = [(key, complete_questions_and_answers[key]) for key in keys]
+
+        questions = []
+        answers = []
+
+        for i in shuffled_complete_questions_and_answers:
+            question, answer = i
+            questions.append(question)
+            answers.append(answer)
+
         for question in questions:
             with open(f"static/quiz_pages/{questions.index(question) + 1}.html", "w") as file:
                 file.write(f"""<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Title</title><link rel="stylesheet" href="quiz_stylesheet.css"></head><body><div id="quiz-screen"><div id="quiz-container"><div id="quiz-top-bar"><div id="question-counter">Question {questions.index(question) + 1} / {len(questions)}</div><div id="score-display">Score: 0</div></div><div id="quiz-content"><div id="quiz-image-container"><img id="quiz-image" src="images/example.png" alt="Question image"></div><div id="quiz-question">What is {question}?</div><input type="text" id="quiz-answer" placeholder="Type your answer..."><button id="submit-answer-button" onclick="parent.check_answer(document.getElementById('quiz-answer').value)">Submit Answer</button></div></div></div></body></html>""")
