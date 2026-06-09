@@ -218,6 +218,8 @@ function close_profile_picture_changer(){
 
 let totalQuizzes = {}
 let currentQuizId = 0
+let answers = []
+let streak = 0
 
 async function start_quiz(){
     let active_quizzes = {"multiplication": false, "division": false, "addition": false, "subtraction": false}
@@ -248,7 +250,15 @@ async function start_quiz(){
     let quizMenu = document.getElementById("quiz-menu")
     quizMenu.innerHTML = '<iframe src="quiz_pages/1.html" class="quiz-frame" id="quiz-frame"> </iframe>';
 
-    totalQuizzes = await api("/generate_quiz", active_quizzes)
+    let multiplyingQuantity = (document.getElementById("multiplication-question-counter").value + 0) /10;
+    let divisionQuantity = (document.getElementById("division-question-counter").value + 0) / 10;
+    let subtractionQuantity = (document.getElementById("subtraction-question-counter").value + 0) / 10;
+    let additionQuantity = (document.getElementById("addition-question-counter").value + 0) / 10;
+
+    console.log(multiplyingQuantity + " " + divisionQuantity + " " + subtractionQuantity + " " + additionQuantity)
+
+    totalQuizzes = await api("/generate_quiz", {quizzes: active_quizzes, quantities: {multiplication: multiplyingQuantity, division: divisionQuantity, addition: additionQuantity, subtraction: subtractionQuantity}})
+    answers = totalQuizzes["answers"]
 
     totalQuizzes["files"].sort((a, b) => {
         const numA = Number(a.split(".")[0]);
@@ -276,14 +286,26 @@ async function next_slide() {
 
     document.getElementById("quiz-frame").src = "quiz_pages/" + totalQuizzes["files"][currentQuizId];
     console.log(totalQuizzes["files"][currentQuizId]);
+    const iframe = document.getElementById("quiz-frame");
+
+    iframe.onload = () => {
+        const doc = iframe.contentDocument || iframe.contentWindow.document;
+        doc.getElementById("score-display").textContent = "Score: " + score;
+    };
 }
 
 async function check_answer(answer){
-
-    score += 1;
-    if (score > highScore){
-        highScore = score;
+    if (answers[currentQuizId] == answer){
+        score += 1;
+        streak += 1;
+        if (score > highScore){
+            highScore = score;
+        }
+        
     }
 
+    else{
+        streak = 0;
+    }
     await next_slide();
 }

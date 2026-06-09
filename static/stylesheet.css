@@ -317,3 +317,11 @@ html,body{
     width: 300px;
     color: white;
 }
+
+.quiz-selection-count{
+    background: #282a3c;
+    padding: 8px;
+    border-radius: 6px;
+    width: 50px;
+    color: white;
+}

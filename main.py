@@ -69,7 +69,7 @@ class IDEHandler(http.server.SimpleHTTPRequestHandler):
             return self.set_icon(username, icon)
 
         elif self.path == "/generate_quiz":
-            return self.generate_quiz(data)
+            return self.generate_quiz(data["quizzes"], data["quantities"])
 
         elif self.path == "/get_highscore":
             return self.get_highscore(data["username"])
@@ -94,31 +94,52 @@ class IDEHandler(http.server.SimpleHTTPRequestHandler):
             users = json.load(file)
             return self._send({"highscore": users[username]["highscore"]})
 
-    def generate_quiz(self, data):
+    def generate_quiz(self, pages, quantities):
         for i in os.listdir("static/quiz_pages"):
             if i.endswith(".html"):
                 os.remove("static/quiz_pages/" + i)
 
+        multiplication_quantity = int(quantities["multiplication"])
+        division_quantity = int(quantities["division"])
+        addition_quantity = int(quantities["addition"])
+        subtraction_quantity = int(quantities["subtraction"])
+
+
         questions = []
-        for i in range(1, 11):
-            if data["multiplication"]:
-                  question = f"{random.randrange(1, 12)} * {random.randrange(1, 12)}"
-                  questions.append(question)
-            if data["division"]:
-                question = f"{random.randrange(1, 12)} / {random.randrange(1, 12)}"
+        answers = []
+        for i in range(multiplication_quantity):
+            if pages["multiplication"]:
+                a, b = random.randrange(1, 12), random.randrange(1, 12)
+                question = f"{a} * {b}"
+                answers.append(a * b)
                 questions.append(question)
-            if data["addition"]:
-                question = f"{random.randrange(1, 12)} + {random.randrange(1, 12)}"
+
+        for i in range(division_quantity):
+            if pages["division"]:
+                a, b = random.randrange(1, 12), random.randrange(1, 12)
+                question = f"{a} / {b}"
+                answers.append(a / b)
                 questions.append(question)
-            if data["subtraction"]:
-                question = f"{random.randrange(1, 12)} - {random.randrange(1, 12)}"
+
+        for i in range(addition_quantity):
+            if pages["addition"]:
+                a, b = random.randrange(1, 12), random.randrange(1, 12)
+                question = f"{a} + {b}"
+                answers.append(a + b)
+                questions.append(question)
+
+        for i in range(subtraction_quantity):
+            if pages["subtraction"]:
+                a, b = random.randrange(1, 12), random.randrange(1, 12)
+                question = f"{a} - {b}"
+                answers.append(a - b)
                 questions.append(question)
 
         for question in questions:
             with open(f"static/quiz_pages/{questions.index(question) + 1}.html", "w") as file:
                 file.write(f"""<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>Title</title><link rel="stylesheet" href="quiz_stylesheet.css"></head><body><div id="quiz-screen"><div id="quiz-container"><div id="quiz-top-bar"><div id="question-counter">Question {questions.index(question) + 1} / {len(questions)}</div><div id="score-display">Score: 0</div></div><div id="quiz-content"><div id="quiz-image-container"><img id="quiz-image" src="images/example.png" alt="Question image"></div><div id="quiz-question">What is {question}?</div><input type="text" id="quiz-answer" placeholder="Type your answer..."><button id="submit-answer-button" onclick="parent.check_answer(document.getElementById('quiz-answer').value)">Submit Answer</button></div></div></div></body></html>""")
 
-        return self._send({"files":[i for i in os.listdir("static/quiz_pages") if i.endswith(".html")]})
+        return self._send({"files":[i for i in os.listdir("static/quiz_pages") if i.endswith(".html")], "answers": answers})
 
     def set_icon(self, username, icon):
         with open("users.json", "r+", encoding="utf-8") as file:
