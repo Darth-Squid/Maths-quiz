@@ -14,8 +14,6 @@ html,body{
     corner:round;
     border: none;
     font-size: 15px;
-    position: relative;
-    left: -200px;
 }
 
 #login-button:hover{
@@ -34,20 +32,6 @@ html,body{
 
 #create-account-button:hover{
     background: lightskyblue;
-}
-
-#login-buttons{
-    margin: 0;
-    position: relative;
-    left: 210px;
-}
-#front-page-icon-container{
-    position: relative;
-    left: 180px;
-}
-#front-page-icon{
-    max-width: 50%;
-    max-height: 50%;
 }
 
 #login-screen{
@@ -106,8 +90,64 @@ html,body{
 }
 
 #opening-screen{
-    display: grid;
-    place-items: anchor-center;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+#main-screen{
+    width: min(500px, 95vw);
+    background: #1e1e2d;
+    padding: 32px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    text-align: center;
+}
+
+#front-page-icon-container{
+    display: flex;
+    justify-content: center;
+}
+
+#front-page-icon{
+    width: 100%;
+    max-width: 220px;
+    height: auto;
+}
+
+#welcome-text{
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    color: white;
+}
+
+#login-buttons{
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+
+    width: 100%;
+    flex-wrap: nowrap;
+}
+
+#login-button,
+#create-account-button{
+    width: 220px;
+    flex: 0 0 auto;
+}
+
+
+@media (max-width: 600px){
+    #login-buttons{
+        flex-direction: column;
+    }
 }
 
 #create-account-error{
@@ -122,15 +162,13 @@ html,body{
     color: white;
 }
 
+#login-menu,
 #create-account-menu{
-    color:white;
-}
-
-#welcome-text{
-    position: relative;
-    font-size: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
     color: white;
-    left: 100px
 }
 
 #sidebar {
