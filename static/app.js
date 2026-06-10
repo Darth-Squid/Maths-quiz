@@ -56,6 +56,7 @@ async function attempt_login(){
 
 function login_success(){
     console.log("LOGIN SUCCESS")
+    document.getElementById("opening-screen").classList.add("hidden")
     document.getElementById("login-menu").classList.add("hidden")
     document.getElementById("front-page-icon-container").classList.add("hidden")
     document.getElementById("dashboard").classList.remove("hidden")
@@ -97,6 +98,7 @@ function open_create_account(){
 
 function create_account_success(){
     console.log("CREATE ACCOUNT SUCCESS")
+    document.getElementById("opening-screen").classList.add("hidden")
     document.getElementById("create-account-menu").classList.add("hidden")
     document.getElementById("front-page-icon-container").classList.add("hidden")
     document.getElementById("dashboard").classList.remove("hidden")
@@ -276,6 +278,7 @@ async function start_quiz(){
 async function next_slide() {
     currentQuizId += 1;
 
+    console.log(totalQuizzes["files"])
     if (currentQuizId >= totalQuizzes["files"].length) {
         console.log("Oooh:" + highScore);
         await api("/set_highscore", {username: userName, new_score: highScore});
