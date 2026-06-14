@@ -396,3 +396,79 @@ html,body{
     display: block;
     margin: 0 auto;
 }
+
+#quiz-rules{
+    position: fixed;
+    inset: 0;
+
+    background: rgba(0,0,0,0.6);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#quiz-rules-box{
+    width: min(600px, 95vw);
+    height: 400px;
+    background: #1e1e1e;
+    border-radius: 8px;
+    overflow: hidden;
+    color: white;
+}
+
+#quiz-rules-box-title{
+    background: #366fd5;
+    padding: 12px;
+    text-align: center;
+}
+
+#rules-content{
+    position: relative;
+
+    width: 100%;
+    height: calc(100% - 48px);
+}
+
+.background-image{
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+    display: block;
+}
+
+#rules-everything-else{
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    align-items: center;
+    padding: 30px;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 32px;
+    color: white;
+}
+
+.rules-buttons{
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.rules-agree{
+    background: red;
+    padding: 16px;
+    width: 220px;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+.rules-agree:hover{
+    background: #ba2a2a;
+}

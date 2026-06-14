@@ -116,7 +116,8 @@ class IDEHandler(http.server.SimpleHTTPRequestHandler):
 
         for i in range(division_quantity):
             if pages["division"]:
-                a, b = random.randrange(1, 12), random.randrange(1, 12)
+                a, b = random.choice([(n, 1) for n in range(1, 12)] + [(n * 2, 2) for n in range(1, 12)] + [(n * 3, 3) for n in range(1, 12)] + [(n * 4, 4) for n in range(1, 12)] + [(n * 5, 5) for n in range(1, 12)] + [(n * 6, 6) for n in range(1, 12)] + [(n * 7, 7) for n in range(1, 12)] + [(n * 8, 8) for n in range(1, 12)] + [(n * 9, 9) for n in range(1, 12)] + [(n * 10, 10) for n in range(1, 12)] + [(n * 11, 11) for n in range(1, 12)] + [(n * 12, 12) for n in range(1, 12)])
+                print(a, b)
                 question = f"{a} / {b}"
                 answers.append(a / b)
                 questions.append(question)

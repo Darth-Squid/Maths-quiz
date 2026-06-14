@@ -119,6 +119,7 @@ document.addEventListener('keydown', function(event) {
 })
 
 async function open_dashboard() {
+    document.getElementById("quiz-rules").classList.remove("hidden")
     console.log("USER:", userName);
 
     if (!userName) {
@@ -258,7 +259,7 @@ async function start_quiz(){
     let additionQuantity = (document.getElementById("addition-question-counter").value + 0) / 10;
 
     console.log(multiplyingQuantity + " " + divisionQuantity + " " + subtractionQuantity + " " + additionQuantity)
-
+    currentQuizId = 0
     totalQuizzes = await api("/generate_quiz", {quizzes: active_quizzes, quantities: {multiplication: multiplyingQuantity, division: divisionQuantity, addition: additionQuantity, subtraction: subtractionQuantity}})
     answers = totalQuizzes["answers"]
 
@@ -311,4 +312,8 @@ async function check_answer(answer){
         streak = 0;
     }
     await next_slide();
+}
+
+function close_rules(){
+    document.getElementById("quiz-rules").classList.add("hidden")
 }

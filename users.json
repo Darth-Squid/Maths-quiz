@@ -4,7 +4,7 @@
         "icon": "images/default.png",
         "nickname": "example_username",
         "salt": "3eyxd{xy=X37?o\rC",
-        "highscore": 99999999999999999999999,
+        "highscore": 1e+23,
         "max_streak": 0,
         "form": "Hine"
     },
