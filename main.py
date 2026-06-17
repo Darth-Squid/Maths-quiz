@@ -13,7 +13,7 @@ import json
 process = None
 console_buffer = []
 
-class IDEHandler(http.server.SimpleHTTPRequestHandler):
+class MathsHandler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory="static", **kwargs)
 
@@ -99,10 +99,10 @@ class IDEHandler(http.server.SimpleHTTPRequestHandler):
             if i.endswith(".html"):
                 os.remove("static/quiz_pages/" + i)
 
-        multiplication_quantity = int(quantities["multiplication"])
-        division_quantity = int(quantities["division"])
-        addition_quantity = int(quantities["addition"])
-        subtraction_quantity = int(quantities["subtraction"])
+        multiplication_quantity = int(quantities["multiplication"]) + 1
+        division_quantity = int(quantities["division"]) + 1
+        addition_quantity = int(quantities["addition"]) + 1
+        subtraction_quantity = int(quantities["subtraction"]) + 1
 
 
         questions = []
@@ -286,5 +286,5 @@ if __name__ == "__main__":
 
     http.server.ThreadingHTTPServer(
         ("localhost", PORT),
-        IDEHandler
+        MathsHandler
     ).serve_forever()

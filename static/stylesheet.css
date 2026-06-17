@@ -303,6 +303,8 @@ html,body{
     background: #2d2d40;
     border: 5px solid #3c97bf;
     border-radius: 10px;
+
+    align-items: anchor-center;
 }
 
 #dashboard {
@@ -318,6 +320,8 @@ html,body{
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+
+    align-items: anchor-center;
 }
 
 .quiz-checkbox {
@@ -471,4 +475,34 @@ html,body{
 
 .rules-agree:hover{
     background: #ba2a2a;
+}
+
+.timestables-choice{
+    background: #212139;
+    padding: 16px;
+    border-radius: 8px;
+    width: 200px;
+    color: white;
+}
+
+.timestables-choice-container{
+    align-items: anchor-center;
+}
+
+#multiplication-choice-container{
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+
+    width: 100%;
+    flex-wrap: nowrap;
+}
+
+.timestable-selector{
+    background: #282a3c;
+    padding: 8px;
+    border-radius: 6px;
+    color: white;
 }

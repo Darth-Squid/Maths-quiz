@@ -102,6 +102,8 @@ function create_account_success(){
     document.getElementById("create-account-menu").classList.add("hidden")
     document.getElementById("front-page-icon-container").classList.add("hidden")
     document.getElementById("dashboard").classList.remove("hidden")
+
+    document.getElementById("quiz-rules").classList.remove("hidden")
     open_dashboard()
 }
 
@@ -119,7 +121,6 @@ document.addEventListener('keydown', function(event) {
 })
 
 async function open_dashboard() {
-    document.getElementById("quiz-rules").classList.remove("hidden")
     console.log("USER:", userName);
 
     if (!userName) {
@@ -315,5 +316,36 @@ async function check_answer(answer){
 }
 
 function close_rules(){
-    document.getElementById("quiz-rules").classList.add("hidden")
+    document.getElementById("quiz-rules").classList.add("hidden");
+}
+
+function upload_new_multiplication(){
+    let newTimesTable = document.getElementById("timestable-multiplication-list").value;
+    console.log(newTimesTable);
+
+    let timesTableIndicator = document.createElement("div");
+    document.getElementById("multiplication-choice-container").appendChild(timesTableIndicator);
+
+    timesTableIndicator.id = "multiplication-" + newTimesTable;
+    timesTableIndicator.classList.add("timestable-selector");
+    timesTableIndicator.textContent = newTimesTable + " Times table  ";
+
+    let timesTableButton = document.createElement("button");
+    timesTableButton.textContent = "x";
+    timesTableButton.classList.add("timestable-close");
+    timesTableButton.id = "close-multiplication-" + newTimesTable;
+    timesTableButton.class = "timestable-button";
+    timesTableButton.onclick = hide_self("multiplication-" + newTimesTable);
+
+    timesTableIndicator.appendChild(timesTableButton);
+}
+
+function upload_new_division(){
+    let newTimesTable = document.getElementById("select-timestable-division").value;
+}
+
+function hide_self(self){
+    document.getElementById(self).classList.add("hidden");
+
+    return void{};
 }
