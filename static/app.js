@@ -51,7 +51,7 @@ async function attempt_login(){
         document.getElementById("login-error").classList.remove("hidden")
         document.getElementById("login-menu-text").classList.add("hidden")
     }
-    
+
 }
 
 function login_success(){
@@ -251,8 +251,6 @@ async function start_quiz(){
     document.getElementById("dashboard").classList.add("hidden")
     document.getElementById("quiz-menu").classList.remove("hidden")
 
-    let quizMenu = document.getElementById("quiz-menu")
-    quizMenu.innerHTML = '<iframe src="quiz_pages/1.html" class="quiz-frame" id="quiz-frame"> </iframe>';
 
     let multiplyingQuantity = (document.getElementById("multiplication-question-counter").value + 0) /10;
     let divisionQuantity = (document.getElementById("division-question-counter").value + 0) / 10;
@@ -263,6 +261,9 @@ async function start_quiz(){
     currentQuizId = 0
     totalQuizzes = await api("/generate_quiz", {quizzes: active_quizzes, quantities: {multiplication: multiplyingQuantity, division: divisionQuantity, addition: additionQuantity, subtraction: subtractionQuantity}})
     answers = totalQuizzes["answers"]
+
+    let quizMenu = document.getElementById("quiz-menu")
+    quizMenu.innerHTML = '<iframe src="quiz_pages/1.html" class="quiz-frame" id="quiz-frame"> </iframe>';
 
     totalQuizzes["files"].sort((a, b) => {
         const numA = Number(a.split(".")[0]);
@@ -306,7 +307,7 @@ async function check_answer(answer){
         if (score > highScore){
             highScore = score;
         }
-        
+
     }
 
     else{
@@ -335,9 +336,11 @@ function upload_new_multiplication(){
     timesTableButton.classList.add("timestable-close");
     timesTableButton.id = "close-multiplication-" + newTimesTable;
     timesTableButton.class = "timestable-button";
-    timesTableButton.onclick = hide_self("multiplication-" + newTimesTable);
 
     timesTableIndicator.appendChild(timesTableButton);
+    document.getElementById("close-multiplication-" + newTimesTable).addEventListener("click", function() {
+        document.getElementById("multiplication-" + newTimesTable).classList.add("hidden")
+    })
 }
 
 function upload_new_division(){

@@ -72,76 +72,85 @@
         </div>
 
         <div id="quiz-selector-container">
-            <div id="multiplication-quiz-selection-box" class="quiz-selection-box">
-                <h1>The multiplication quiz!</h1> <input type="checkbox" id="multiplication-quiz-checkbox" class="quiz-checkbox">
-                <span>This quiz is about all things multiplication!</span>
-                <br>
-                <span>Select question count: </span>
-                <input type="number" id="multiplication-question-counter" min=1 max=20 placeholder=0 class="quiz-selection-count">
+            <table>
+                <tbody>
+                    <tc>
+                        <div id="multiplication-quiz-selection-box" class="quiz-selection-box">
+                            <h1>The multiplication quiz!</h1> <input type="checkbox" id="multiplication-quiz-checkbox" class="quiz-checkbox">
+                            <span>This quiz is about all things multiplication!</span>
+                            <br>
+                            <span>Select question count: </span>
+                            <input type="number" id="multiplication-question-counter" min=1 max=20 placeholder=0 class="quiz-selection-count">
 
-                <br>
-                <div class="timestables-choice-container">
-                    <select name="timestable-multiplication" class="timestables-choice" id="timestable-multiplication-list">
-                        <option value="null">Select Times Table</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                        <option value="11">11</option>
-                        <option value="12">12</option>
-                    </select>
-                </div>
-                <button class="select-timestable-button-multiplication" id="select-timestable-multiplication" onclick="upload_new_multiplication()">Select</button>
-                <div id="multiplication-choice-container"></div>
-            </div>
-            <div id="division-quiz-selection-box" class="quiz-selection-box">
-                <h1>The division quiz!</h1> <input type="checkbox" id="division-quiz-checkbox" class="quiz-checkbox">
-                <span>This quiz is about all things division!</span>
-                <br>
-                <span>Select question count: </span>
-                <input type="number" id="division-question-counter" min=1 max=20 placeholder=0 class="quiz-selection-count">
-                <br>
-                <div class="timestables-choice-container">
-                    <select name="timestable-division" class="timestables-choice" id="timestable-division">
-                        <option value="null">Select Times Table</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                        <option value="11">11</option>
-                        <option value="12">12</option>
-                    </select>
-                </div>
-                <button class="select-timestable-button" id="select-timestable-division">Select</button>
+                            <br>
+                            <div class="timestables-choice-container">
+                                <select name="timestable-multiplication" class="timestables-choice" id="timestable-multiplication-list">
+                                    <option value="null">Select Times Table</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                </select>
+                            </div>
+                            <button class="select-timestable-button-multiplication" id="select-timestable-multiplication" onclick="upload_new_multiplication()">Select</button>
+                            <div id="multiplication-choice-container"></div>
+                        </div><br><br>
+                        <div id="addition-quiz-selection-box" class="quiz-selection-box">
+                            <h1>The addition quiz!</h1> <input type="checkbox" id="addition-quiz-checkbox" class="quiz-checkbox">
+                            <span>This quiz is about all things addition!</span>
+                            <br>
+                            <span>Select question count: </span>
+                            <input type="number" id="addition-question-counter" min=1 max=20 placeholder=0 class="quiz-selection-count">
+                        </div>
+                    </tc>
+                    <tc>
+                        <div id="division-quiz-selection-box" class="quiz-selection-box">
+                            <h1>The division quiz!</h1> <input type="checkbox" id="division-quiz-checkbox" class="quiz-checkbox">
+                            <span>This quiz is about all things division!</span>
+                            <br>
+                            <span>Select question count: </span>
+                            <input type="number" id="division-question-counter" min=1 max=20 placeholder=0 class="quiz-selection-count">
+                            <br>
+                            <div class="timestables-choice-container">
+                                <select name="timestable-division" class="timestables-choice" id="timestable-division">
+                                    <option value="null">Select Times Table</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                </select>
+                            </div>
+                            <button class="select-timestable-button" id="select-timestable-division">Select</button>
 
-                <div id="division-choice-container"></div>
-            </div>
-            <div id="addition-quiz-selection-box" class="quiz-selection-box">
-                <h1>The addition quiz!</h1> <input type="checkbox" id="addition-quiz-checkbox" class="quiz-checkbox">
-                <span>This quiz is about all things addition!</span>
-                <br>
-                <span>Select question count: </span>
-                <input type="number" id="addition-question-counter" min=1 max=20 placeholder=0 class="quiz-selection-count">
-            </div>
-            <div id="subtraction-quiz-selection-box" class="quiz-selection-box">
-                <h1>The subtraction quiz!</h1> <input type="checkbox" id="subtraction-quiz-checkbox" class="quiz-checkbox">
-                <span>This quiz is about all things subtraction!</span>
-                <br>
-                <span>Select question count: </span>
-                <input type="number" id="subtraction-question-counter" min=1 max=20 placeholder=0 class="quiz-selection-count">
-            </div>
+                            <div id="division-choice-container"></div>
+                        </div>
+                        <br><br>
+                        <div id="subtraction-quiz-selection-box" class="quiz-selection-box">
+                            <h1>The subtraction quiz!</h1> <input type="checkbox" id="subtraction-quiz-checkbox" class="quiz-checkbox">
+                            <span>This quiz is about all things subtraction!</span>
+                            <br>
+                            <span>Select question count: </span>
+                            <input type="number" id="subtraction-question-counter" min=1 max=20 placeholder=0 class="quiz-selection-count">
+                        </div>
+                    </tc>
+                </tbody>
+            </table>
         </div>
     </div>
 
