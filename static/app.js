@@ -320,9 +320,19 @@ function close_rules(){
     document.getElementById("quiz-rules").classList.add("hidden");
 }
 
+const chosen_multiplication = [];
+
 function upload_new_multiplication(){
     let newTimesTable = document.getElementById("timestable-multiplication-list").value;
     console.log(newTimesTable);
+
+    console.log(chosen_multiplication)
+
+    if (newTimesTable.toString() in chosen_multiplication){
+        return
+    }
+
+    chosen_multiplication[newTimesTable] = true
 
     let timesTableIndicator = document.createElement("div");
     document.getElementById("multiplication-choice-container").appendChild(timesTableIndicator);
@@ -339,8 +349,14 @@ function upload_new_multiplication(){
 
     timesTableIndicator.appendChild(timesTableButton);
     document.getElementById("close-multiplication-" + newTimesTable).addEventListener("click", function() {
-        document.getElementById("multiplication-" + newTimesTable).classList.add("hidden")
+        document.getElementById("multiplication-" + newTimesTable).classList.add("hidden");
+        const index = chosen_multiplication.indexOf(5);
+        if (index > -1) {
+          chosen_multiplication.splice(index, 1);
+        }
     })
+
+
 }
 
 function upload_new_division(){
