@@ -77,6 +77,10 @@ class MathsHandler(http.server.SimpleHTTPRequestHandler):
         elif self.path == "/set_highscore":
             return self.set_highscore(data["username"], data["new_score"])
 
+        elif self.path == "/get_leaderboard":
+            print("Getting leaderboard")
+            return self.get_leaderboard()
+
         else:
             return self._send({"error": "invalid api call"}, 400)
 
@@ -253,6 +257,21 @@ class MathsHandler(http.server.SimpleHTTPRequestHandler):
             "status": "uploaded",
             "path": filename
         })
+
+    def get_leaderboard(self):
+        with open("users.json", "r+") as file:
+            data = json.load(file)
+
+            users = data.keys()
+            scores = [data[i]["highscore"] for i in users]
+
+            leaderboard = {}
+            print(scores)
+
+            for user in users:
+                    leaderboard[user] = data[user]["highscore"]
+            
+            return self._send({"leaderboard":leaderboard})
 
     def hash_string(self, text):
         result = 0x811c9dc5
