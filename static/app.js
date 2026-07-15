@@ -288,6 +288,9 @@ async function next_slide() {
         open_dashboard();
         document.getElementById("dashboard").classList.remove("hidden");
         document.getElementById("quiz-menu").classList.add("hidden");
+
+        let leaderboard = get_leaderboard()
+        
     }
 
     document.getElementById("quiz-frame").src = "quiz_pages/" + totalQuizzes["files"][currentQuizId];
@@ -367,4 +370,12 @@ function hide_self(self){
     document.getElementById(self).classList.add("hidden");
 
     return void{};
+}
+
+async function get_leaderboard(){
+    let leaderboard = await api(
+        "/get_leaderboard"
+    )
+
+    return leaderboard
 }
