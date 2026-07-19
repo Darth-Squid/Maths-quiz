@@ -281,7 +281,6 @@ class MathsHandler(http.server.SimpleHTTPRequestHandler):
             scores = [data[i]["highscore"] for i in users]
 
             leaderboard = {}
-            print(scores)
 
             for user in users:
                     leaderboard[user] = data[user]["highscore"]

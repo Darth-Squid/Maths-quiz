@@ -385,30 +385,30 @@ function close_rules(){
 const chosen_multiplication = [];
 
 function upload_new_multiplication(){
-    let container = document.getElementById("multiplication-choices")
-    let text = document.getElementById("choose-times-tables-text-multiplication")
+    let container = document.getElementById("multiplication-choices");
+    let text = document.getElementById("choose-times-tables-text-multiplication");
 
     if (container.classList.contains("hidden")){
-        container.classList.remove("hidden")
-        text.textContent = "Choose times tables ▶"
+        container.classList.remove("hidden");
+        text.textContent = "Choose times tables ▶";
     }
     else{
         container.classList.add("hidden")
-        text.textContent = "Choose times tables ▼"
+        text.textContent = "Choose times tables ▼";
     }
 }
 
 function upload_new_division(){
-    let container = document.getElementById("division-choices")
-    let text = document.getElementById("choose-times-tables-text-division")
+    let container = document.getElementById("division-choices");
+    let text = document.getElementById("choose-times-tables-text-division");
 
     if (container.classList.contains("hidden")){
-        container.classList.remove("hidden")
-        text.textContent = "Choose times tables ▶"
+        container.classList.remove("hidden");
+        text.textContent = "Choose times tables ▶";
     }
     else{
-        container.classList.add("hidden")
-        text.textContent = "Choose times tables ▼"
+        container.classList.add("hidden");
+        text.textContent = "Choose times tables ▼";
     }
 }
 
@@ -419,9 +419,64 @@ function hide_self(self){
 }
 
 async function get_leaderboard(){
-    let leaderboard = await api(
+    return await api(
         "/get_leaderboard"
-    )
+    );
+}
 
-    return leaderboard
+async function open_leaderboard() {
+    let leaderboard = await get_leaderboard();
+    leaderboard = leaderboard["leaderboard"];
+
+    const leaderboardElement = document.getElementById("leaderboard");
+
+    leaderboard = Object.entries(leaderboard)
+    .sort((a, b) => b[1] - a[1]);
+
+    for (let [player, score] of leaderboard) {
+        let score = leaderboard[player];
+
+        let new_entry = document.createElement("div");
+
+        let rank = document.createElement("span");
+        rank.textContent = "#1";
+        rank.classList.add("leaderboard-rank");
+        new_entry.appendChild(rank);
+
+        let leaderboard_picture = document.createElement("div");
+
+        leaderboard_picture.classList.add("profile-wrapper");
+
+        const iconRes = await api("/get_icon", { username: player });
+
+        if (iconRes.icon) {
+            leaderboard_picture.style.backgroundImage =
+                `url("/${iconRes.icon}?t=${Date.now()}")`;
+
+            leaderboard_picture.style.backgroundSize = "cover";
+            leaderboard_picture.style.backgroundPosition = "center";
+            leaderboard_picture.style.backgroundRepeat = "no-repeat";
+        }
+
+        new_entry.appendChild(leaderboard_picture);
+
+        const name = await api("/get_nickname", { username: player });
+
+        let nameText = document.createElement("span");
+        nameText.textContent = name["nickname"];
+        nameText.classList.add("leaderboard-username");
+
+        new_entry.appendChild(nameText);
+        new_entry.appendChild(document.createElement("br"))
+
+        let scoreText = document.createElement("span");
+        scoreText.textContent = score;
+        scoreText.classList.add("leaderboard-score");
+
+        new_entry.appendChild(scoreText);
+
+        leaderboardElement.appendChild(new_entry);
+    }
+
+    leaderboardElement.classList.remove("hidden");
 }

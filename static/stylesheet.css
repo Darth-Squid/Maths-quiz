@@ -576,3 +576,110 @@ html,body{
     accent-color: dodgerblue;
 }
 
+#leaderboard {
+    position: fixed;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 450px;
+
+    background: #1e1e2d;
+    border: 3px solid #38384d;
+    border-radius: 12px;
+
+    color: white;
+
+    overflow: hidden;
+
+    box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+}
+
+#leaderboard-title {
+    background: #2d2d40;
+
+    padding: 14px;
+
+    text-align: center;
+
+    font-size: 26px;
+    font-weight: bold;
+
+    border-bottom: 2px solid #38384d;
+}
+
+#leaderboard-content {
+    padding: 12px;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+#leaderboard-content > div {
+    display: flex;
+    align-items: center;
+
+    height: 60px;
+
+    background: #282a3c;
+
+    border-radius: 8px;
+
+    padding: 8px 12px;
+
+    border: 1px solid #38384d;
+}
+
+.leaderboard-rank {
+    width: 35px;
+
+    text-align: center;
+
+    font-size: 18px;
+    font-weight: bold;
+
+    color: #aaa;
+}
+
+#leaderboard-content .profile-wrapper {
+    width: 45px;
+    height: 45px;
+
+    margin-right: 12px;
+
+    background-size: cover;
+    background-position: center;
+
+    flex-shrink: 0;
+
+    overflow: hidden;
+}
+
+#leaderboard-content .profile-wrapper::after {
+    display: none;
+}
+
+.leaderboard-username {
+    flex: 1;
+
+    font-size: 17px;
+    font-weight: 600;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.leaderboard-score {
+    width: 80px;
+
+    text-align: right;
+
+    font-size: 18px;
+    font-weight: bold;
+
+    color: #60a5fa;
+}
