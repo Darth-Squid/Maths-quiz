@@ -69,7 +69,7 @@ class MathsHandler(http.server.SimpleHTTPRequestHandler):
             return self.set_icon(username, icon)
 
         elif self.path == "/generate_quiz":
-            return self.generate_quiz(data["quizzes"], data["quantities"])
+            return self.generate_quiz(data["quizzes"], data["quantities"], data["multiplication_times_tables"], data["division_times_tables"])
 
         elif self.path == "/get_highscore":
             return self.get_highscore(data["username"])
@@ -98,7 +98,7 @@ class MathsHandler(http.server.SimpleHTTPRequestHandler):
             users = json.load(file)
             return self._send({"highscore": users[username]["highscore"]})
 
-    def generate_quiz(self, pages, quantities):
+    def generate_quiz(self, pages, quantities, multiplication, division):
         for i in os.listdir("static/quiz_pages"):
             if i.endswith(".html"):
                 os.remove("static/quiz_pages/" + i)
@@ -111,16 +111,31 @@ class MathsHandler(http.server.SimpleHTTPRequestHandler):
 
         questions = []
         answers = []
+
+        multiplication_times_tables_questions = {i: [(i, n) for n in range(1, 13)] for i in range(1, 13)}
+        division_times_tables_questions = {i: [(i, n * i) for n in range(1, 13)] for i in range(1, 13)}
+
+        selected_multiplication_times_tables_questions = [multiplication_times_tables_questions[int(i)] for i in multiplication.keys() if multiplication[i] == True]
+        selected_division_times_tables_questions = [division_times_tables_questions[int(i)] for i in division.keys() if multiplication[i] == True]
+
+        final_multiplication_questions = []
+        final_division_questions = []
+
+        for i in selected_multiplication_times_tables_questions:
+            final_multiplication_questions += i
+        for i in selected_division_times_tables_questions:
+            final_division_questions += i
+
         for i in range(multiplication_quantity):
             if pages["multiplication"]:
-                a, b = random.randrange(1, 12), random.randrange(1, 12)
+                a, b = random.choice(final_multiplication_questions)
                 question = f"{a} * {b}"
                 answers.append(a * b)
                 questions.append(question)
 
         for i in range(division_quantity):
             if pages["division"]:
-                a, b = random.choice([(n, 1) for n in range(1, 12)] + [(n * 2, 2) for n in range(1, 12)] + [(n * 3, 3) for n in range(1, 12)] + [(n * 4, 4) for n in range(1, 12)] + [(n * 5, 5) for n in range(1, 12)] + [(n * 6, 6) for n in range(1, 12)] + [(n * 7, 7) for n in range(1, 12)] + [(n * 8, 8) for n in range(1, 12)] + [(n * 9, 9) for n in range(1, 12)] + [(n * 10, 10) for n in range(1, 12)] + [(n * 11, 11) for n in range(1, 12)] + [(n * 12, 12) for n in range(1, 12)])
+                a, b = random.choice(final_division_questions)
                 print(a, b)
                 question = f"{a} / {b}"
                 answers.append(a / b)

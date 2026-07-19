@@ -304,6 +304,7 @@ html,body{
     border-radius: 10px;
 
     align-items: anchor-center;
+    text-align: center;
 }
 
 #dashboard {
@@ -486,6 +487,9 @@ html,body{
 
 .timestables-choice-container{
     align-items: anchor-center;
+
+    background-color: #282a3c;
+    border-radius: 2px;
 }
 
 #multiplication-choice-container{
@@ -499,9 +503,76 @@ html,body{
     flex-wrap: nowrap;
 }
 
-.timestable-selector{
-    background: #282a3c;
-    padding: 8px;
+.timestables-choice-container {
+    width: 250px;
+    margin: 12px auto 0;
+}
+
+#multiplication-selector {
+    position: relative;
+}
+
+#division-selector {
+    position: relative;
+}
+
+.choose-times-tables-text {
+    background: #212139;
+    border: 2px solid #38384d;
     border-radius: 6px;
     color: white;
+    padding: 10px 14px;
+    cursor: pointer;
+    transition: .15s;
+    user-select: none;
+    text-align: center;
 }
+
+.choose-times-tables-text:hover {
+    background: #2a2a46;
+    border-color: dodgerblue;
+}
+
+.times-tables-choices {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    right: 0;
+
+    background: #212139;
+    border: 2px solid #38384d;
+    border-radius: 6px;
+
+    max-height: 220px;
+    overflow-y: auto;
+
+    z-index: 100;
+}
+
+.times-tables-choices label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 10px 14px;
+
+    color: white;
+    cursor: pointer;
+
+    transition: background .15s;
+}
+
+.times-tables-choices label:hover {
+    background: #2d2d40;
+}
+
+.times-tables-choices label + label {
+    border-top: 1px solid #38384d;
+}
+
+.times-tables-choices input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: dodgerblue;
+}
+

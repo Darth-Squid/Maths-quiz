@@ -248,6 +248,64 @@ async function start_quiz(){
         return
     }
 
+    let multiplication_times_tables = {1: true, 2: true, 3: true, 4: true, 5: true, 6: true, 7: true, 8: true, 9: true, 10: true, 11: true, 12: true}
+    let division_times_tables = {1: true, 2: true, 3: true, 4: true, 5: true, 6: true, 7: true, 8: true, 9: true, 10: true, 11: true, 12: true}
+
+    let multiplication_choice_container = document.getElementById("multiplication-choices")
+    let multiplication_1 = document.getElementById("multiplication-choice-1").checked
+    let multiplication_2 = document.getElementById("multiplication-choice-2").checked
+    let multiplication_3 = document.getElementById("multiplication-choice-3").checked
+    let multiplication_4 = document.getElementById("multiplication-choice-4").checked
+    let multiplication_5 = document.getElementById("multiplication-choice-5").checked
+    let multiplication_6 = document.getElementById("multiplication-choice-6").checked
+    let multiplication_7 = document.getElementById("multiplication-choice-7").checked
+    let multiplication_8 = document.getElementById("multiplication-choice-8").checked
+    let multiplication_9 = document.getElementById("multiplication-choice-9").checked
+    let multiplication_10 = document.getElementById("multiplication-choice-10").checked
+    let multiplication_11 = document.getElementById("multiplication-choice-11").checked
+    let multiplication_12 = document.getElementById("multiplication-choice-12").checked
+
+    multiplication_times_tables[1] = multiplication_1
+    multiplication_times_tables[2] = multiplication_2
+    multiplication_times_tables[3] = multiplication_3
+    multiplication_times_tables[4] = multiplication_4
+    multiplication_times_tables[5] = multiplication_5
+    multiplication_times_tables[6] = multiplication_6
+    multiplication_times_tables[7] = multiplication_7
+    multiplication_times_tables[8] = multiplication_8
+    multiplication_times_tables[9] = multiplication_9
+    multiplication_times_tables[10] = multiplication_10
+    multiplication_times_tables[11] = multiplication_11
+    multiplication_times_tables[12] = multiplication_12
+
+
+    let division_choice_container = document.getElementById("multiplication-choices")
+    let division_1 = document.getElementById("division-choice-1").checked
+    let division_2 = document.getElementById("division-choice-2").checked
+    let division_3 = document.getElementById("division-choice-3").checked
+    let division_4 = document.getElementById("division-choice-4").checked
+    let division_5 = document.getElementById("division-choice-5").checked
+    let division_6 = document.getElementById("division-choice-6").checked
+    let division_7 = document.getElementById("division-choice-7").checked
+    let division_8 = document.getElementById("division-choice-8").checked
+    let division_9 = document.getElementById("division-choice-9").checked
+    let division_10 = document.getElementById("division-choice-10").checked
+    let division_11 = document.getElementById("division-choice-11").checked
+    let division_12 = document.getElementById("division-choice-12").checked
+
+    division_times_tables[1] = division_1
+    division_times_tables[2] = division_2
+    division_times_tables[3] = division_3
+    division_times_tables[4] = division_4
+    division_times_tables[5] = division_5
+    division_times_tables[6] = division_6
+    division_times_tables[7] = division_7
+    division_times_tables[8] = division_8
+    division_times_tables[9] = division_9
+    division_times_tables[10] = division_10
+    division_times_tables[11] = division_11
+    division_times_tables[12] = division_12
+
     document.getElementById("dashboard").classList.add("hidden")
     document.getElementById("quiz-menu").classList.remove("hidden")
 
@@ -259,7 +317,8 @@ async function start_quiz(){
 
     console.log(multiplyingQuantity + " " + divisionQuantity + " " + subtractionQuantity + " " + additionQuantity)
     currentQuizId = 0
-    totalQuizzes = await api("/generate_quiz", {quizzes: active_quizzes, quantities: {multiplication: multiplyingQuantity, division: divisionQuantity, addition: additionQuantity, subtraction: subtractionQuantity}})
+    totalQuizzes = await api("/generate_quiz", {quizzes: active_quizzes, quantities: {multiplication: multiplyingQuantity, division: divisionQuantity, addition: additionQuantity, subtraction: subtractionQuantity}, multiplication_times_tables: multiplication_times_tables, division_times_tables: division_times_tables})
+
     answers = totalQuizzes["answers"]
 
     let quizMenu = document.getElementById("quiz-menu")
@@ -326,44 +385,31 @@ function close_rules(){
 const chosen_multiplication = [];
 
 function upload_new_multiplication(){
-    let newTimesTable = document.getElementById("timestable-multiplication-list").value;
-    console.log(newTimesTable);
+    let container = document.getElementById("multiplication-choices")
+    let text = document.getElementById("choose-times-tables-text-multiplication")
 
-    console.log(chosen_multiplication)
-
-    if (newTimesTable.toString() in chosen_multiplication){
-        return
+    if (container.classList.contains("hidden")){
+        container.classList.remove("hidden")
+        text.textContent = "Choose times tables ▶"
     }
-
-    chosen_multiplication[newTimesTable] = true
-
-    let timesTableIndicator = document.createElement("div");
-    document.getElementById("multiplication-choice-container").appendChild(timesTableIndicator);
-
-    timesTableIndicator.id = "multiplication-" + newTimesTable;
-    timesTableIndicator.classList.add("timestable-selector");
-    timesTableIndicator.textContent = newTimesTable + " Times table  ";
-
-    let timesTableButton = document.createElement("button");
-    timesTableButton.textContent = "x";
-    timesTableButton.classList.add("timestable-close");
-    timesTableButton.id = "close-multiplication-" + newTimesTable;
-    timesTableButton.class = "timestable-button";
-
-    timesTableIndicator.appendChild(timesTableButton);
-    document.getElementById("close-multiplication-" + newTimesTable).addEventListener("click", function() {
-        document.getElementById("multiplication-" + newTimesTable).classList.add("hidden");
-        const index = chosen_multiplication.indexOf(5);
-        if (index > -1) {
-          chosen_multiplication.splice(index, 1);
-        }
-    })
-
-
+    else{
+        container.classList.add("hidden")
+        text.textContent = "Choose times tables ▼"
+    }
 }
 
 function upload_new_division(){
-    let newTimesTable = document.getElementById("select-timestable-division").value;
+    let container = document.getElementById("division-choices")
+    let text = document.getElementById("choose-times-tables-text-division")
+
+    if (container.classList.contains("hidden")){
+        container.classList.remove("hidden")
+        text.textContent = "Choose times tables ▶"
+    }
+    else{
+        container.classList.add("hidden")
+        text.textContent = "Choose times tables ▼"
+    }
 }
 
 function hide_self(self){

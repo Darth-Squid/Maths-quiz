@@ -83,23 +83,27 @@
 
                             <br>
                             <div class="timestables-choice-container">
-                                <select name="timestable-multiplication" class="timestables-choice" id="timestable-multiplication-list">
-                                    <option value="null">Select Times Table</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                    <option value="7">7</option>
-                                    <option value="8">8</option>
-                                    <option value="9">9</option>
-                                    <option value="10">10</option>
-                                    <option value="11">11</option>
-                                    <option value="12">12</option>
-                                </select>
+                                <div id="multiplication-selector">
+                                    <div class="choose-times-tables-text" id="choose-times-tables-text-multiplication" onclick="upload_new_multiplication()">
+                                        Choose times tables ▼
+                                    </div>
+
+                                    <div id="multiplication-choices" class="hidden times-tables-choices">
+                                        <label><span>1 Times Table</span><input id="multiplication-choice-1" type="checkbox" checked></label>
+                                        <label><span>2 Times Table</span><input id="multiplication-choice-2" type="checkbox" checked></label>
+                                        <label><span>3 Times Table</span><input id="multiplication-choice-3" type="checkbox" checked></label>
+                                        <label><span>4 Times Table</span><input id="multiplication-choice-4" type="checkbox" checked></label>
+                                        <label><span>5 Times Table</span><input id="multiplication-choice-5" type="checkbox" checked></label>
+                                        <label><span>6 Times Table</span><input id="multiplication-choice-6" type="checkbox" checked></label>
+                                        <label><span>7 Times Table</span><input id="multiplication-choice-7" type="checkbox" checked></label>
+                                        <label><span>8 Times Table</span><input id="multiplication-choice-8" type="checkbox" checked></label>
+                                        <label><span>9 Times Table</span><input id="multiplication-choice-9" type="checkbox" checked></label>
+                                        <label><span>10 Times Table</span><input id="multiplication-choice-10" type="checkbox" checked></label>
+                                        <label><span>11 Times Table</span><input id="multiplication-choice-11" type="checkbox" checked></label>
+                                        <label><span>12 Times Table</span><input id="multiplication-choice-12" type="checkbox" checked></label>
+                                    </div>
+                                </div>
                             </div>
-                            <button class="select-timestable-button-multiplication" id="select-timestable-multiplication" onclick="upload_new_multiplication()">Select</button>
                             <div id="multiplication-choice-container"></div>
                         </div><br><br>
                         <div id="addition-quiz-selection-box" class="quiz-selection-box">
@@ -119,24 +123,27 @@
                             <input type="number" id="division-question-counter" min=1 max=20 placeholder=0 class="quiz-selection-count">
                             <br>
                             <div class="timestables-choice-container">
-                                <select name="timestable-division" class="timestables-choice" id="timestable-division">
-                                    <option value="null">Select Times Table</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                    <option value="7">7</option>
-                                    <option value="8">8</option>
-                                    <option value="9">9</option>
-                                    <option value="10">10</option>
-                                    <option value="11">11</option>
-                                    <option value="12">12</option>
-                                </select>
-                            </div>
-                            <button class="select-timestable-button" id="select-timestable-division">Select</button>
+                                <div id="division-selector">
+                                    <div class="choose-times-tables-text" id="choose-times-tables-text-division" onclick="upload_new_division()">
+                                        Choose times tables ▼
+                                    </div>
 
+                                    <div id="division-choices" class="hidden times-tables-choices">
+                                        <label><span>1 Times Table</span><input id="division-choice-1" type="checkbox" checked></label>
+                                        <label><span>2 Times Table</span><input id="division-choice-2" type="checkbox" checked></label>
+                                        <label><span>3 Times Table</span><input id="division-choice-3" type="checkbox" checked></label>
+                                        <label><span>4 Times Table</span><input id="division-choice-4" type="checkbox" checked></label>
+                                        <label><span>5 Times Table</span><input id="division-choice-5" type="checkbox" checked></label>
+                                        <label><span>6 Times Table</span><input id="division-choice-6" type="checkbox" checked></label>
+                                        <label><span>7 Times Table</span><input id="division-choice-7" type="checkbox" checked></label>
+                                        <label><span>8 Times Table</span><input id="division-choice-8" type="checkbox" checked></label>
+                                        <label><span>9 Times Table</span><input id="division-choice-9" type="checkbox" checked></label>
+                                        <label><span>10 Times Table</span><input id="division-choice-10" type="checkbox" checked></label>
+                                        <label><span>11 Times Table</span><input id="division-choice-11" type="checkbox" checked></label>
+                                        <label><span>12 Times Table</span><input id="division-choice-12" type="checkbox" checked></label>
+                                    </div>
+                                </div>
+                            </div>
                             <div id="division-choice-container"></div>
                         </div>
                         <br><br>

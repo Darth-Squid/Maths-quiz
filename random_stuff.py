@@ -45,4 +45,11 @@ class Solution(object):
         return val
 
 
-print(Solution().twoSum([3, 2, 3], 6))
+#print(Solution().twoSum([3, 2, 3], 6))
+
+multiplication_times_tables_questions = {i: [(i, n) for n in range(1, 13)] for i in range(1, 13)}
+division_times_tables_questions = {i: [(i, n * i) for n in range(1, 13)] for i in range(1, 13)}
+
+
+print(multiplication_times_tables_questions)
+print(division_times_tables_questions)
