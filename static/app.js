@@ -226,6 +226,9 @@ let answers = []
 let streak = 0
 
 async function start_quiz(){
+    document.getElementById("division-choices").classList.add("hidden");
+    document.getElementById("multiplication-choices").classList.add("hidden");
+
     let active_quizzes = {"multiplication": false, "division": false, "addition": false, "subtraction": false}
 
     if (document.getElementById("multiplication-quiz-checkbox").checked === true){
@@ -345,6 +348,7 @@ async function next_slide() {
         console.log("Oooh:" + highScore);
         await api("/set_highscore", {username: userName, new_score: highScore});
         open_dashboard();
+        open_leaderboard();
         document.getElementById("dashboard").classList.remove("hidden");
         document.getElementById("quiz-menu").classList.add("hidden");
 
@@ -425,6 +429,9 @@ async function get_leaderboard(){
 }
 
 async function open_leaderboard() {
+    const content = document.getElementById("leaderboard-content");
+    content.innerHTML = "";
+
     let leaderboard = await get_leaderboard();
     leaderboard = leaderboard["leaderboard"];
 
@@ -433,50 +440,48 @@ async function open_leaderboard() {
     leaderboard = Object.entries(leaderboard)
     .sort((a, b) => b[1] - a[1]);
 
-    for (let [player, score] of leaderboard) {
-        let score = leaderboard[player];
+    for (const [index, [player, score]] of leaderboard.entries()) {
 
         let new_entry = document.createElement("div");
+        new_entry.className = "leaderboard-entry";
 
-        let rank = document.createElement("span");
-        rank.textContent = "#1";
-        rank.classList.add("leaderboard-rank");
-        new_entry.appendChild(rank);
+        let rankText = document.createElement("span");
+        rankText.className = "leaderboard-rank";
+        rankText.textContent = "#" + (index + 1);
 
         let leaderboard_picture = document.createElement("div");
-
-        leaderboard_picture.classList.add("profile-wrapper");
+        leaderboard_picture.className = "profile-wrapper";
 
         const iconRes = await api("/get_icon", { username: player });
 
         if (iconRes.icon) {
             leaderboard_picture.style.backgroundImage =
                 `url("/${iconRes.icon}?t=${Date.now()}")`;
-
-            leaderboard_picture.style.backgroundSize = "cover";
-            leaderboard_picture.style.backgroundPosition = "center";
-            leaderboard_picture.style.backgroundRepeat = "no-repeat";
         }
-
-        new_entry.appendChild(leaderboard_picture);
 
         const name = await api("/get_nickname", { username: player });
 
         let nameText = document.createElement("span");
+        nameText.className = "leaderboard-username";
         nameText.textContent = name["nickname"];
-        nameText.classList.add("leaderboard-username");
-
-        new_entry.appendChild(nameText);
-        new_entry.appendChild(document.createElement("br"))
 
         let scoreText = document.createElement("span");
+        scoreText.className = "leaderboard-score";
         scoreText.textContent = score;
-        scoreText.classList.add("leaderboard-score");
 
-        new_entry.appendChild(scoreText);
+        new_entry.append(
+            rankText,
+            leaderboard_picture,
+            nameText,
+            scoreText
+        );
 
-        leaderboardElement.appendChild(new_entry);
+        document.getElementById("leaderboard-content").appendChild(new_entry);
     }
 
     leaderboardElement.classList.remove("hidden");
+}
+
+function close_leaderboard() {
+    document.getElementById("leaderboard").classList.add("hidden");
 }

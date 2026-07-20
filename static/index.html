@@ -79,7 +79,7 @@
                             <span>This quiz is about all things multiplication!</span>
                             <br>
                             <span>Select question count: </span>
-                            <input type="number" id="multiplication-question-counter" min=1 max=20 placeholder=0 class="quiz-selection-count">
+                            <input type="number" id="multiplication-question-counter" min=1 max=20 placeholder=0 class="quiz-selection-count" value="1">
 
                             <br>
                             <div class="timestables-choice-container">
@@ -111,7 +111,7 @@
                             <span>This quiz is about all things addition!</span>
                             <br>
                             <span>Select question count: </span>
-                            <input type="number" id="addition-question-counter" min=1 max=20 placeholder=0 class="quiz-selection-count">
+                            <input type="number" id="addition-question-counter" min=1 max=20 placeholder=0 class="quiz-selection-count" value="1">
                         </div>
                     </tc>
                     <tc>
@@ -120,7 +120,7 @@
                             <span>This quiz is about all things division!</span>
                             <br>
                             <span>Select question count: </span>
-                            <input type="number" id="division-question-counter" min=1 max=20 placeholder=0 class="quiz-selection-count">
+                            <input type="number" id="division-question-counter" min=1 max=20 placeholder=0 class="quiz-selection-count" value="1">
                             <br>
                             <div class="timestables-choice-container">
                                 <div id="division-selector">
@@ -152,7 +152,7 @@
                             <span>This quiz is about all things subtraction!</span>
                             <br>
                             <span>Select question count: </span>
-                            <input type="number" id="subtraction-question-counter" min=1 max=20 placeholder=0 class="quiz-selection-count">
+                            <input type="number" id="subtraction-question-counter" min=1 max=20 placeholder=0 class="quiz-selection-count" value="1">
                         </div>
                     </tc>
                 </tbody>
@@ -176,9 +176,16 @@
     </div>
 
     <div id="leaderboard" class="hidden">
-        <div id="leaderboard-title">Leaderboard</div>
-        <div id="leaderboard-content">
+        <div id="leaderboard-header">
+            <div id="leaderboard-title">Leaderboard</div>
+
+            <button id="leaderboard-close"
+                    onclick="close_leaderboard()">
+                ✕
+            </button>
         </div>
+
+        <div id="leaderboard-content"></div>
     </div>
 
     <div id="quiz-menu" class="hidden">

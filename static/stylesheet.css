@@ -633,53 +633,97 @@ html,body{
     border: 1px solid #38384d;
 }
 
-.leaderboard-rank {
-    width: 35px;
+.leaderboard-entry{
+    display:grid;
 
-    text-align: center;
+    grid-template-columns: 45px 50px 1fr 90px;
 
-    font-size: 18px;
-    font-weight: bold;
+    align-items:center;
 
-    color: #aaa;
+    gap:12px;
+
+    height:60px;
+
+    padding:8px 12px;
+
+    background:#282a3c;
+
+    border:1px solid #38384d;
+
+    border-radius:8px;
 }
 
-#leaderboard-content .profile-wrapper {
-    width: 45px;
-    height: 45px;
-
-    margin-right: 12px;
-
-    background-size: cover;
-    background-position: center;
-
-    flex-shrink: 0;
-
-    overflow: hidden;
+.leaderboard-rank{
+    text-align:center;
+    font-weight:bold;
+    color:#aaa;
 }
 
-#leaderboard-content .profile-wrapper::after {
-    display: none;
+#leaderboard-content .profile-wrapper{
+    width:40px;
+    height:40px;
+
+    background-size:cover;
+    background-position:center;
+
+    justify-self:center;
 }
 
-.leaderboard-username {
-    flex: 1;
-
-    font-size: 17px;
-    font-weight: 600;
-
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+#leaderboard-content .profile-wrapper::after{
+    display:none;
 }
 
-.leaderboard-score {
-    width: 80px;
+.leaderboard-username{
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
 
-    text-align: right;
+    font-weight:600;
+}
 
-    font-size: 18px;
-    font-weight: bold;
+.leaderboard-score{
+    text-align:right;
 
-    color: #60a5fa;
+    color:dodgerblue;
+
+    font-weight:bold;
+}
+
+#leaderboard-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    background:#2d2d40;
+
+    border-bottom:2px solid #38384d;
+
+    padding:10px 14px;
+}
+
+#leaderboard-title{
+    font-size:24px;
+    font-weight:bold;
+    color:white;
+}
+
+#leaderboard-close{
+    width:32px;
+    height:32px;
+
+    border:none;
+    border-radius:6px;
+
+    background:transparent;
+    color:#bbb;
+
+    font-size:22px;
+    cursor:pointer;
+
+    transition:0.15s;
+}
+
+#leaderboard-close:hover{
+    background:#3a3a50;
+    color:white;
 }
