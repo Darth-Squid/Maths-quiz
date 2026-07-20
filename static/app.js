@@ -345,7 +345,6 @@ async function next_slide() {
 
     console.log(totalQuizzes["files"])
     if (currentQuizId >= totalQuizzes["files"].length) {
-        console.log("Oooh:" + highScore);
         await api("/set_highscore", {username: userName, new_score: highScore});
         open_dashboard();
         open_leaderboard();
@@ -378,6 +377,7 @@ async function check_answer(answer){
 
     else{
         streak = 0;
+        alert(`You got it wrong! The answer was ${answers[currentQuizId]}, not ${answer}`);
     }
     await next_slide();
 }

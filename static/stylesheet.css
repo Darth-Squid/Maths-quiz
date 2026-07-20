@@ -263,8 +263,8 @@ html,body{
     width: 600px;
     height: 400px;
 
-    background: #1e1e1e;
-    border: 1px solid #333;
+    background: #2d2d40;
+    border: 1px solid #38384d;
     border-radius: 8px;
 
     display: flex;
@@ -275,7 +275,7 @@ html,body{
     display: flex;
     justify-content: space-between;
     padding: 8px;
-    background: #1e1e2d;
+    background: #262634;
     color: white;
 }
 
@@ -726,4 +726,30 @@ html,body{
 #leaderboard-close:hover{
     background:#3a3a50;
     color:white;
+}
+
+#create-account-menu-text{
+    color: white;
+    font-size: large;
+}
+
+#close-change-profile-picture{
+    width:32px;
+    height:32px;
+
+    border:none;
+    border-radius:6px;
+
+    background:transparent;
+    color:#bbb;
+
+    font-size:22px;
+    cursor:pointer;
+
+    transition:0.15s;
+}
+
+#close-change-profile-picture:hover {
+    background: #3a3a50;
+    color: white;
 }

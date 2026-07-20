@@ -1,7 +1,7 @@
 {
     "example_username": {
         "password": "b4a32cb73eyxd{xy=X37?o\rC",
-        "icon": "images/default.png",
+        "icon": "images/maths quiz final.png",
         "nickname": "example_username",
         "salt": "3eyxd{xy=X37?o\rC",
         "highscore": 1e+23,
@@ -16,5 +16,14 @@
         "highscore": 0,
         "max_streak": 0,
         "form": "Hine"
+    },
+    "a": {
+        "password": "e70c2de5\r|}td=lUy<U0[3+Z",
+        "icon": "images/default.png",
+        "nickname": "a",
+        "salt": "\r|}td=lUy<U0[3+Z",
+        "highscore": 12,
+        "max_streak": 0,
+        "form": "Bennet"
     }
 }
